@@ -1,13 +1,13 @@
 .menu-panel {
   padding: 4px 7px;
   float: left;
-  width: 140px;
+  width: 200px;
   height: 100vh;
   display: flex;
   flex-direction: column;
   border-right: 1px solid var(--border-color);
   color: var(--text-primary);
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
 }
 
 .menu-panel {
