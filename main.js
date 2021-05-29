@@ -30,7 +30,7 @@ logger.info(`\n\n----- ${appInfo.name} v${appInfo.version} ${os.platform()}-----
 logger.info(`[conf] Looking for .leptonrc at ${ path.join(app.getPath('home'), '.leptonrc') }`)
 logger.info('[conf] The resolved configuration is ...')
 for (const key of Object.getOwnPropertyNames(defaultConfig)) {
-  logger.info(`"${key}": ${JSON.stringify(nconf.get(key))}`)    
+  logger.info(`"${key}": ${JSON.stringify(nconf.get(key))}`)
 }
 
 let mainWindow = null
@@ -60,7 +60,7 @@ function createWindow (autoLogin) {
     y: mainWindowState.y,
     minWidth: 636,
     minHeight: 609,
-    // titleBarStyle: 'hidden',
+    autoHideMenuBar: true,
     backgroundColor: '#808080',
     show: false,
     icon: path.join(__dirname, '/icon/icon.png'),
@@ -71,7 +71,7 @@ function createWindow (autoLogin) {
     logger.debug('-----> registering login-page-ready listener')
     // Set up a one-time listener for 'login-page-ready'
     ipcMain.on('login-page-ready', () => {
-      logger.info('[signal] sending auto-login signal')        
+      logger.info('[signal] sending auto-login signal')
       mainWindow.webContents.send('auto-login')
       ipcMain.removeAllListeners('login-page-ready')
     })
@@ -151,12 +151,12 @@ app.on('window-all-closed', () => {
 })
 
 
-/* 'before-quit' is emitted when Electron receives 
+/* 'before-quit' is emitted when Electron receives
  * the signal to exit and wants to start closing windows */
 app.on('before-quit', () => {
   willQuitApp = true
   try {
-    // If we launch the app and close it quickly, we might run into a 
+    // If we launch the app and close it quickly, we might run into a
     // situation where electronLocalshortcut is not initialized.
     if (mainWindow && electronLocalshortcut) {
       electronLocalshortcut.unregisterAll(mainWindow)
@@ -226,7 +226,7 @@ function setUpApplicationMenu () {
         accelerator: shortcuts.keyAboutPage,
         click: (item, mainWindow) => mainWindow && mainWindow.send('about-page')
       },
-      {    
+      {
         label: 'Search',
         accelerator: shortcuts.keyShortcutForSearch,
         click: (item, mainWindow) => mainWindow && mainWindow.send('search-gist')

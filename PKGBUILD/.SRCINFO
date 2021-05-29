@@ -1,0 +1,17 @@
+pkgbase = lepton-arclight-appimage
+	pkgdesc = Arclight-themed fork of GitHub Gist client Lepton
+	pkgver = 1.9.1
+	pkgrel = 1
+	url = https://hackjutsu.com/Lepton/
+	arch = x86_64
+	license = MIT
+	makedepends = fuse2
+	provides = lepton-snippet-manager
+	conflicts = lepton-snippet-manager
+	options = !strip
+	source = Lepton-1.9.1.AppImage
+	source = lepton-snippet-manager.sh
+	sha256sums = 238f8816fdc1e69dc409b216f36ed80ee177b2fe82dc2cf7189b60df97fc0693
+	sha256sums = 3a6fd5430844ac76e793f17c5019be9f701f8702813e354f87530cbb36bb3965
+
+pkgname = lepton-arclight-appimage

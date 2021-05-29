@@ -9,3 +9,7 @@ screenshots
 *backup*
 .idea
 .vscode
+PKGBUILD/*
+!PKGBUILD/.SRCINFO
+!PKGBUILD/lepton-snippet-manager.sh
+!PKGBUILD/PKGBUILD
