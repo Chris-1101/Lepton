@@ -1,0 +1,49 @@
+# Maintainer: Chris MacBain <chris dot j dot macbain at gmail dot com>
+
+_pkgname=lepton-arclight
+pkgname=${_pkgname}-appimage
+pkgver=1.9.1
+pkgrel=1
+pkgdesc="Arclight-themed fork of GitHub Gist client Lepton"
+arch=('x86_64')
+url="https://hackjutsu.com/Lepton/"
+license=('MIT')
+provides=('lepton-snippet-manager')
+conflicts=('lepton-snippet-manager')
+makedepends=('fuse2')
+source=("Lepton-${pkgver}.AppImage"
+        "lepton-snippet-manager.sh")
+sha256sums=('238f8816fdc1e69dc409b216f36ed80ee177b2fe82dc2cf7189b60df97fc0693'
+            '3a6fd5430844ac76e793f17c5019be9f701f8702813e354f87530cbb36bb3965')
+options=(!strip)
+_filename=./Lepton-${pkgver}.AppImage
+
+prepare() {
+    cd "${srcdir}"
+    chmod u+x ${_filename}
+    ./${_filename} --appimage-extract 2> /dev/null
+}
+
+build() {
+    sed -i "s|Exec=.*|Exec=${_pkgname}|g" "${srcdir}/squashfs-root/lepton.desktop"
+    sed -i "s|Icon=.*|Icon=${_pkgname}|g" "${srcdir}/squashfs-root/lepton.desktop"
+}
+
+package() {
+    install -dm755 "${pkgdir}/opt/appimages"
+    install -Dm755 "${srcdir}/${_filename}" "${pkgdir}/opt/appimages/${_pkgname}.appimage"
+    install -Dm755 "${srcdir}/lepton-snippet-manager.sh" "${pkgdir}/usr/bin/${_pkgname}"
+
+    install -dm755 "${pkgdir}/usr/share/icons/hicolor/0x0/apps"
+    install -Dm644 "${srcdir}/squashfs-root/lepton.png" "${pkgdir}/usr/share/icons/hicolor/0x0/apps/${_pkgname}.png"
+
+    for icon_res in $(ls "${srcdir}/squashfs-root/usr/share/icons/hicolor"); do
+        install -dm755 "${pkgdir}/usr/share/icons/hicolor/$icon_res/apps"
+        install -Dm644 "${srcdir}/squashfs-root/usr/share/icons/hicolor/$icon_res/apps/lepton.png" \
+            "${pkgdir}/usr/share/icons/hicolor/$icon_res/apps/${_pkgname}.png";
+    done
+
+    install -Dm644 "${srcdir}/squashfs-root/lepton.desktop" "${pkgdir}/usr/share/applications/appimagekit-${_pkgname}.desktop"
+
+    rm -rf "${srcdir}/squashfs-root"
+}
