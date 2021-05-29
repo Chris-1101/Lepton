@@ -1,7 +1,7 @@
 # Maintainer: Chris MacBain <chris dot j dot macbain at gmail dot com>
 
-_pkgname=lepton-arclight
-pkgname=${_pkgname}-appimage
+_pkgname=lepton-snippet-manager
+pkgname=lepton-arclight
 pkgver=1.9.1
 pkgrel=1
 pkgdesc="Arclight-themed fork of GitHub Gist client Lepton"
